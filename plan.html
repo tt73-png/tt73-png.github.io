@@ -4,132 +4,324 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>家庭菜園 3年ローテーション計画</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f5f4f0; color: #1a1a18; min-height: 100vh; padding: 2rem 1rem; }
-  .card { background: #fff; border-radius: 16px; border: 0.5px solid rgba(0,0,0,0.1); max-width: 860px; margin: 0 auto; padding: 1.5rem 1.5rem 2rem; }
-  h1 { font-size: 17px; font-weight: 500; margin-bottom: 4px; }
-  .subtitle { font-size: 13px; color: #73726c; margin-bottom: 1.4rem; }
+:root {
+  --bg:        #f7f5f0;
+  --surface:   #ffffff;
+  --ink:       #1e1c17;
+  --ink2:      #6b6860;
+  --ink3:      #a8a69f;
+  --border:    rgba(0,0,0,0.1);
+  --radius:    12px;
 
-  .callout { border-left: 3px solid #97C459; border-radius: 0 8px 8px 0; background: #EAF3DE; padding: 8px 12px; margin-bottom: 1.2rem; font-size: 12px; color: #27500A; }
+  --onion-bg:  #e8f5ee; --onion-bd: #3daf78; --onion-tx: #0d5c35;
+  --faba-bg:   #e5f0fb; --faba-bd:  #5599d8; --faba-tx:  #0c3f7a;
+  --sweet-bg:  #e8f3de; --sweet-bd: #78b83a; --sweet-tx: #285010;
+  --brass-bg:  #eeecfe; --brass-bd: #8a80d8; --brass-tx: #3a3085;
+  --spin-bg:   #fdf0d8; --spin-bd:  #e09a20; --spin-tx:  #6b4208;
+  --rest-bg:   #f0eeea; --rest-bd:  #a8a298; --rest-tx:  #4a4640;
+}
 
-  .tabs { display: flex; gap: 6px; margin-bottom: 1.2rem; flex-wrap: wrap; }
-  button.tab { padding: 5px 16px; border-radius: 20px; font-size: 12px; font-weight: 500; cursor: pointer; border: 0.5px solid #ccc; background: transparent; color: #73726c; transition: all .15s; }
-  button.tab.active { background: #1a1a18; color: #fff; border-color: transparent; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  .legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-bottom: 1rem; }
-  .leg { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #73726c; }
-  .leg-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  padding: 2.5rem 1rem 4rem;
+}
 
-  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-bottom: 1.4rem; }
-  .plot { border-radius: 12px; border: 0.5px solid #ddd; overflow: hidden; }
-  .plot-head { padding: 7px 10px; font-size: 11px; font-weight: 500; display: flex; align-items: center; gap: 6px; }
-  .plot-num { font-size: 16px; font-weight: 500; min-width: 22px; }
-  .plot-body { padding: 7px 10px 10px; font-size: 12px; border-top: 0.5px solid rgba(0,0,0,0.08); }
-  .crop-tag { display: inline-block; font-size: 11px; font-weight: 500; padding: 2px 7px; border-radius: 10px; margin: 2px 2px 2px 0; }
-  .note { font-size: 10px; color: #888; margin-top: 4px; }
+.page { max-width: 780px; margin: 0 auto; }
 
-  .badge-fixed { background: #E1F5EE; color: #0F6E56; font-size: 10px; font-weight: 500; padding: 1px 6px; border-radius: 8px; }
-  .badge-rest  { background: #FAEEDA; color: #854F0B; font-size: 10px; font-weight: 500; padding: 1px 6px; border-radius: 8px; }
-  .badge-new   { background: #FBEAF0; color: #993556; font-size: 10px; font-weight: 500; padding: 1px 6px; border-radius: 8px; }
+/* ── Header ── */
+header { margin-bottom: 2rem; }
+header h1 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  margin-bottom: 4px;
+}
+header p { font-size: 13px; color: var(--ink2); }
 
-  .sect-label { font-size: 11px; font-weight: 500; color: #73726c; margin: 1rem 0 6px; letter-spacing: .04em; }
+/* ── Tabs ── */
+.tabs { display: flex; gap: 6px; margin-bottom: 1.6rem; }
+.tab {
+  padding: 6px 18px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink2);
+  font-family: 'Noto Sans JP', sans-serif;
+  transition: all .18s;
+}
+.tab:hover { border-color: var(--ink3); color: var(--ink); }
+.tab.active { background: var(--ink); color: #fff; border-color: transparent; }
 
-  #flow-section .flow-row { display: flex; align-items: stretch; margin-bottom: 6px; overflow-x: auto; }
-  .flow-label { font-size: 11px; font-weight: 500; color: #73726c; min-width: 40px; padding: 8px 6px 0 0; flex-shrink: 0; }
-  .flow-cell { flex: 1; min-width: 110px; border: 0.5px solid #ccc; border-right: none; padding: 7px 9px; font-size: 12px; }
-  .flow-cell:first-of-type { border-radius: 8px 0 0 8px; }
-  .flow-cell:last-of-type  { border-radius: 0 8px 8px 0; border-right: 0.5px solid #ccc; }
-  .flow-yr   { font-size: 10px; color: #aaa; margin-bottom: 2px; }
-  .flow-name { font-weight: 500; }
-  .arr-cell  { font-size: 16px; color: #ccc; padding: 8px 2px 0; flex-shrink: 0; }
+/* ── Plot grid ── */
+.plot-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0,1fr));
+  gap: 10px;
+  margin-bottom: 2rem;
+}
 
-  .rules { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 0.2rem; }
-  .rule-card { border: 0.5px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 9px 11px; }
-  .rule-title { font-size: 12px; font-weight: 500; margin-bottom: 3px; display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
-  .rule-body  { font-size: 11px; color: #73726c; line-height: 1.55; }
+.plot {
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: transform .15s;
+}
+.plot:hover { transform: translateY(-2px); }
 
-  @media (max-width: 560px) {
-    .grid  { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .rules { grid-template-columns: 1fr; }
-  }
+.plot-head {
+  padding: 10px 10px 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.plot-id {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  opacity: .55;
+}
+.plot-name {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.plot-sub {
+  font-size: 10px;
+  opacity: .65;
+  margin-top: 2px;
+  line-height: 1.4;
+}
+.plot-foot {
+  padding: 6px 10px 8px;
+  border-top: 1px solid rgba(0,0,0,0.07);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 8px;
+  letter-spacing: .03em;
+}
+.badge-fixed { background: rgba(61,175,120,.18); color: #0d5c35; }
+.badge-rest  { background: rgba(168,162,152,.2);  color: #4a4640; }
+.area-label  { font-size: 10px; color: var(--ink3); margin-left: auto; }
+
+/* ── Legend ── */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-bottom: 2rem;
+  padding: 14px 16px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+.leg { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--ink2); }
+.leg-dot { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
+
+/* ── Flow table ── */
+.section-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  color: var(--ink3);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.flow-table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; font-size: 12px; }
+.flow-table th {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink3);
+  padding: 4px 10px 8px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+.flow-table th.col-plot { text-align: left; }
+.flow-table td {
+  padding: 5px 6px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+.flow-table td.col-plot {
+  text-align: left;
+  padding-left: 10px;
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--ink2);
+}
+.flow-table tr:last-child td { border-bottom: none; }
+.flow-chip {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ── Rules ── */
+.rules { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 2rem; }
+.rule {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+}
+.rule h3 { font-size: 12px; font-weight: 700; margin-bottom: 5px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.rule p  { font-size: 11px; color: var(--ink2); line-height: 1.6; }
+
+/* ── Calendar bar ── */
+.calendar-section { margin-bottom: 2rem; }
+.cal-row { display: flex; align-items: center; gap: 0; margin-bottom: 5px; }
+.cal-label { font-size: 11px; font-weight: 500; color: var(--ink2); min-width: 92px; flex-shrink: 0; padding-right: 8px; }
+.cal-months { display: grid; grid-template-columns: repeat(12,1fr); flex: 1; gap: 2px; }
+.cal-cell { height: 20px; border-radius: 3px; background: var(--rest-bg); }
+.cal-header { display: flex; align-items: center; gap: 0; margin-bottom: 4px; }
+.cal-header-labels { display: grid; grid-template-columns: repeat(12,1fr); flex: 1; margin-left: 92px; gap: 2px; }
+.cal-mon { font-size: 9px; text-align: center; color: var(--ink3); font-weight: 500; }
+
+@media (max-width: 600px) {
+  .plot-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .rules { grid-template-columns: 1fr; }
+  .flow-table { font-size: 11px; }
+}
 </style>
 </head>
 <body>
-<div class="card">
+<div class="page">
+
+<header>
   <h1>家庭菜園 3年ローテーション計画</h1>
-  <p class="subtitle">16㎡（2㎡×8区画）／連作障害対策あり／緑肥エリア確保</p>
+  <p>10㎡（2㎡×5区画）｜連作障害対策あり｜緑肥エリア確保</p>
+</header>
 
-  <div class="callout">サトイモ（土垂）を区画Hに追加。区画GにクローバーをGH合算で集約し、休耕1区画を維持します。</div>
+<!-- Legend -->
+<div class="legend">
+  <div class="leg"><div class="leg-dot" style="background:var(--onion-bg);border:1.5px solid var(--onion-bd)"></div>ヒガンバナ科（玉ねぎ）</div>
+  <div class="leg"><div class="leg-dot" style="background:var(--faba-bg);border:1.5px solid var(--faba-bd)"></div>マメ科（ソラマメ）</div>
+  <div class="leg"><div class="leg-dot" style="background:var(--sweet-bg);border:1.5px solid var(--sweet-bd)"></div>ヒルガオ科（サツマイモ）</div>
+  <div class="leg"><div class="leg-dot" style="background:var(--brass-bg);border:1.5px solid var(--brass-bd)"></div>アブラナ科／ヒユ科</div>
+  <div class="leg"><div class="leg-dot" style="background:var(--rest-bg);border:1.5px solid var(--rest-bd)"></div>緑肥（休耕）</div>
+</div>
 
-  <div class="tabs">
-    <button class="tab active" onclick="showYear(1,this)">1年目</button>
-    <button class="tab" onclick="showYear(2,this)">2年目</button>
-    <button class="tab" onclick="showYear(3,this)">3年目</button>
+<!-- Tabs -->
+<div class="tabs">
+  <button class="tab active" onclick="showYear(1,this)">1年目</button>
+  <button class="tab" onclick="showYear(2,this)">2年目</button>
+  <button class="tab" onclick="showYear(3,this)">3年目</button>
+</div>
+
+<!-- Plot grid -->
+<div class="plot-grid" id="plot-grid"></div>
+
+<!-- Flow table -->
+<div class="section-title">3年間の区画ごとの流れ</div>
+<table class="flow-table" id="flow-table">
+  <thead>
+    <tr>
+      <th class="col-plot">区画</th>
+      <th>1年目</th><th>2年目</th><th>3年目</th>
+    </tr>
+  </thead>
+  <tbody id="flow-body"></tbody>
+</table>
+
+<!-- Seasonal calendar -->
+<div class="section-title">季節カレンダー（作業目安）</div>
+<div class="calendar-section">
+  <div class="cal-header">
+    <div class="cal-header-labels">
+      <div class="cal-mon">1</div><div class="cal-mon">2</div><div class="cal-mon">3</div>
+      <div class="cal-mon">4</div><div class="cal-mon">5</div><div class="cal-mon">6</div>
+      <div class="cal-mon">7</div><div class="cal-mon">8</div><div class="cal-mon">9</div>
+      <div class="cal-mon">10</div><div class="cal-mon">11</div><div class="cal-mon">12</div>
+    </div>
   </div>
+  <div id="cal-rows"></div>
+</div>
 
-  <div class="legend">
-    <div class="leg"><div class="leg-dot" style="background:#E1F5EE;border:1px solid #5DCAA5"></div>ヒガンバナ科（玉ねぎ）</div>
-    <div class="leg"><div class="leg-dot" style="background:#E6F1FB;border:1px solid #85B7EB"></div>マメ科（ソラマメ）</div>
-    <div class="leg"><div class="leg-dot" style="background:#EAF3DE;border:1px solid #97C459"></div>ヒルガオ科（サツマイモ）</div>
-    <div class="leg"><div class="leg-dot" style="background:#EEEDFE;border:1px solid #AFA9EC"></div>アブラナ科</div>
-    <div class="leg"><div class="leg-dot" style="background:#FAEEDA;border:1px solid #EF9F27"></div>ヒユ科（ほうれん草）</div>
-    <div class="leg"><div class="leg-dot" style="background:#FBEAF0;border:1px solid #ED93B1"></div>サトイモ科</div>
-    <div class="leg"><div class="leg-dot" style="background:#F1EFE8;border:1px solid #B4B2A9"></div>緑肥（休耕）</div>
+<!-- Rules -->
+<div class="section-title">連作障害ルール</div>
+<div class="rules">
+  <div class="rule">
+    <h3>玉ねぎ・ソラマメ・サツマイモ <span class="badge badge-fixed">毎年固定</span></h3>
+    <p>区画A・B・Cで毎年ローテーション。マメ科→ヒルガオ科→ヒガンバナ科の順で窒素固定を活かした配置を維持。各科とも最低2年あく。</p>
   </div>
-
-  <div class="grid" id="plot-grid"></div>
-
-  <div class="sect-label">各区画の3年流れ</div>
-  <div id="flow-section"></div>
-
-  <div class="sect-label">連作障害ルール</div>
-  <div class="rules">
-    <div class="rule-card">
-      <div class="rule-title">サトイモ科（サトイモ）<span class="badge-new">新規追加</span></div>
-      <div class="rule-body">連作障害が強め。3〜4年あける必要あり。区画Hで単年栽培後、2・3年目は休耕へ。日陰に強く背が高くなるため南側を避けた配置が理想。</div>
-    </div>
-    <div class="rule-card">
-      <div class="rule-title">休耕エリアの調整</div>
-      <div class="rule-body">区画Hをサトイモに充てる年は区画Gのみ緑肥。2・3年目は区画Hを休耕に戻し地力回復。全体として常に最低1区画は休耕を維持。</div>
-    </div>
-    <div class="rule-card">
-      <div class="rule-title">玉ねぎ・ソラマメ（固定）<span class="badge-fixed">固定</span></div>
-      <div class="rule-body">区画A・B・C内でローテーション継続。サツマイモ跡地にはソラマメの窒素固定を活かす順番を維持。</div>
-    </div>
-    <div class="rule-card">
-      <div class="rule-title">アブラナ科リレー</div>
-      <div class="rule-body">区画D・E・Fで継続。大根→キャベツ→白菜→小松菜を年内リレー。ほうれん草は別区画でローテーション。変更なし。</div>
-    </div>
+  <div class="rule">
+    <h3>残り2区画（D・E）の3年サイクル</h3>
+    <p>アブラナ科リレー・ほうれん草・緑肥の3パターンを区画D・Eで交互に回す。同じ科が連続しないよう毎年入れ替え。</p>
+  </div>
+  <div class="rule">
+    <h3>アブラナ科リレー</h3>
+    <p>大根（春・秋）→キャベツ（秋定植）→白菜（秋）→小松菜（周年）を1区画の中で年内リレー栽培。同科集中による根こぶ病リスクには石灰施用で対策。</p>
+  </div>
+  <div class="rule">
+    <h3>緑肥（クローバー）<span class="badge badge-rest">休耕</span></h3>
+    <p>毎年1区画は緑肥に充て地力を回復。クローバーは窒素固定効果あり。翌年の定植1ヶ月前に鋤き込み、十分に分解させてから次作へ。</p>
   </div>
 </div>
 
+</div><!-- .page -->
+
 <script>
-const FAMILY = {
-  onion:   {name:'玉ねぎ（極早生）', bg:'#E1F5EE',bd:'#5DCAA5',tx:'#085041',fixed:true},
-  faba:    {name:'ソラマメ',          bg:'#E6F1FB',bd:'#85B7EB',tx:'#0C447C',fixed:true},
-  sweet:   {name:'サツマイモ',        bg:'#EAF3DE',bd:'#97C459',tx:'#27500A'},
-  brassica:{name:'アブラナ科リレー',  bg:'#EEEDFE',bd:'#AFA9EC',tx:'#3C3489',note:'大根→キャベツ→白菜→小松菜'},
-  spinach: {name:'ほうれん草',        bg:'#FAEEDA',bd:'#EF9F27',tx:'#633806'},
-  taro:    {name:'サトイモ（土垂）',  bg:'#FBEAF0',bd:'#ED93B1',tx:'#72243E',isnew:true,note:'単年・1年目のみ'},
-  rest:    {name:'緑肥（クローバー）',bg:'#F1EFE8',bd:'#B4B2A9',tx:'#444441',rest:true},
+const F = {
+  onion: {
+    name:'玉ねぎ（極早生）', sub:'ヒガンバナ科',
+    bg:'var(--onion-bg)', bd:'var(--onion-bd)', tx:'var(--onion-tx)', fixed:true
+  },
+  faba: {
+    name:'ソラマメ', sub:'マメ科',
+    bg:'var(--faba-bg)', bd:'var(--faba-bd)', tx:'var(--faba-tx)', fixed:true
+  },
+  sweet: {
+    name:'サツマイモ', sub:'ヒルガオ科',
+    bg:'var(--sweet-bg)', bd:'var(--sweet-bd)', tx:'var(--sweet-tx)', fixed:true
+  },
+  brass: {
+    name:'アブラナ科リレー', sub:'大根→キャベツ→白菜→小松菜',
+    bg:'var(--brass-bg)', bd:'var(--brass-bd)', tx:'var(--brass-tx)'
+  },
+  spin: {
+    name:'ほうれん草', sub:'ヒユ科（春・秋2作）',
+    bg:'var(--spin-bg)', bd:'var(--spin-bd)', tx:'var(--spin-tx)'
+  },
+  rest: {
+    name:'緑肥', sub:'クローバー（休耕）',
+    bg:'var(--rest-bg)', bd:'var(--rest-bd)', tx:'var(--rest-tx)', rest:true
+  },
 };
 
 const PLOTS = [
-  {id:'A', years:['onion','sweet','faba']},
-  {id:'B', years:['faba','onion','sweet']},
-  {id:'C', years:['sweet','faba','onion']},
-  {id:'D', years:['brassica','spinach','brassica']},
-  {id:'E', years:['spinach','brassica','spinach']},
-  {id:'F', years:['brassica','rest','brassica']},
-  {id:'G', years:['rest','rest','rest']},
-  {id:'H', years:['taro','rest','rest']},
+  { id:'A', years:['onion','sweet','faba'] },
+  { id:'B', years:['faba','onion','sweet'] },
+  { id:'C', years:['sweet','faba','onion'] },
+  { id:'D', years:['brass','spin','rest']  },
+  { id:'E', years:['spin','rest','brass']  },
 ];
 
-let currentYear = 1;
+let yr = 1;
 
-function showYear(yr, btn) {
-  currentYear = yr;
+function showYear(y, btn) {
+  yr = y;
   document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   renderGrid();
@@ -139,61 +331,84 @@ function renderGrid() {
   const g = document.getElementById('plot-grid');
   g.innerHTML = '';
   PLOTS.forEach(p => {
-    const key = p.years[currentYear - 1];
-    const f = FAMILY[key];
-    const div = document.createElement('div');
-    div.className = 'plot';
-    div.style.background = f.bg;
-    div.style.borderColor = f.bd;
-    div.innerHTML = `
-      <div class="plot-head" style="background:${f.bg}">
-        <span class="plot-num" style="color:${f.tx}">区画${p.id}</span>
-        ${f.fixed ? '<span class="badge-fixed">固定</span>' : ''}
-        ${f.rest  ? '<span class="badge-rest">休耕</span>'  : ''}
-        ${f.isnew ? '<span class="badge-new">新規</span>'   : ''}
-      </div>
-      <div class="plot-body" style="background:${f.bg}">
-        <span class="crop-tag" style="background:${f.bd}22;color:${f.tx};border:0.5px solid ${f.bd}">${f.name}</span>
-        ${f.note ? `<div class="note">${f.note}</div>` : ''}
-        <div class="note">2㎡</div>
+    const key = p.years[yr-1];
+    const f = F[key];
+    g.innerHTML += `
+      <div class="plot" style="background:${f.bg};border-color:${f.bd}">
+        <div class="plot-head">
+          <div class="plot-id">区画 ${p.id}</div>
+          <div class="plot-name" style="color:${f.tx}">${f.name}</div>
+          <div class="plot-sub" style="color:${f.tx}">${f.sub}</div>
+        </div>
+        <div class="plot-foot" style="border-color:rgba(0,0,0,0.07)">
+          ${f.fixed ? '<span class="badge badge-fixed">毎年固定</span>' : ''}
+          ${f.rest  ? '<span class="badge badge-rest">休耕</span>'     : ''}
+          <span class="area-label">2㎡</span>
+        </div>
       </div>`;
-    g.appendChild(div);
   });
-  renderFlows();
 }
 
-function renderFlows() {
-  const sec = document.getElementById('flow-section');
-  sec.innerHTML = '';
+function renderFlow() {
+  const tb = document.getElementById('flow-body');
+  tb.innerHTML = '';
   PLOTS.forEach(p => {
-    const row = document.createElement('div');
-    row.className = 'flow-row';
-    const label = document.createElement('div');
-    label.className = 'flow-label';
-    label.textContent = `区画${p.id}`;
-    row.appendChild(label);
-    p.years.forEach((key, i) => {
-      const f = FAMILY[key];
-      const cell = document.createElement('div');
-      cell.className = 'flow-cell';
-      cell.style.background = f.bg;
-      cell.style.borderColor = f.bd;
-      if (i === 0) cell.style.borderRadius = '8px 0 0 8px';
-      if (i === 2) { cell.style.borderRadius = '0 8px 8px 0'; cell.style.borderRight = `0.5px solid ${f.bd}`; }
-      cell.innerHTML = `<div class="flow-yr">${i+1}年目</div><div class="flow-name" style="color:${f.tx}">${f.name}</div>`;
-      row.appendChild(cell);
-      if (i < 2) {
-        const arr = document.createElement('div');
-        arr.className = 'arr-cell';
-        arr.textContent = '›';
-        row.appendChild(arr);
-      }
-    });
-    sec.appendChild(row);
+    const cells = p.years.map(k => {
+      const f = F[k];
+      return `<td><span class="flow-chip" style="background:${f.bg};color:${f.tx};border:1px solid ${f.bd}">${f.name}</span></td>`;
+    }).join('');
+    tb.innerHTML += `<tr><td class="col-plot">${p.id}</td>${cells}</tr>`;
   });
+}
+
+// Seasonal calendar
+const CAL = [
+  { label:'玉ねぎ（極早生）',
+    months:['H','H','G','G','H2','H2','','','S','S','S','W'],
+    colors:['#e09a20','#e09a20','#5599d8','#5599d8','#3daf78','#3daf78','#f0eeea','#f0eeea','#3daf78','#3daf78','#3daf78','#a8c8e0'] },
+  { label:'ソラマメ',
+    months:['W','W','W','G','G','H2','','','','S','S','W'],
+    colors:['#a8c8e0','#a8c8e0','#a8c8e0','#5599d8','#5599d8','#3daf78','#f0eeea','#f0eeea','#f0eeea','#3daf78','#3daf78','#a8c8e0'] },
+  { label:'サツマイモ',
+    months:['','','','','S','G','G','G','G','H2','',''],
+    colors:['#f0eeea','#f0eeea','#f0eeea','#f0eeea','#3daf78','#78b83a','#78b83a','#78b83a','#78b83a','#e09a20','#f0eeea','#f0eeea'] },
+  { label:'アブラナ科',
+    months:['H2','','S','H2','','','','S','G','G','H2','H2'],
+    colors:['#e09a20','#f0eeea','#8a80d8','#e09a20','#f0eeea','#f0eeea','#f0eeea','#8a80d8','#8a80d8','#8a80d8','#e09a20','#e09a20'] },
+  { label:'ほうれん草',
+    months:['H2','H2','S','H2','','','','S','H2','H2','H2','G'],
+    colors:['#e09a20','#e09a20','#8a80d8','#e09a20','#f0eeea','#f0eeea','#f0eeea','#8a80d8','#e09a20','#e09a20','#e09a20','#8a80d8'] },
+];
+
+function renderCal() {
+  const div = document.getElementById('cal-rows');
+  div.innerHTML = '';
+  CAL.forEach(row => {
+    const cells = row.colors.map((c,i) => {
+      const opacity = c === '#f0eeea' ? '0.4' : '1';
+      return `<div class="cal-cell" style="background:${c};opacity:${opacity}" title="${['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'][i]}"></div>`;
+    }).join('');
+    div.innerHTML += `
+      <div class="cal-row">
+        <div class="cal-label">${row.label}</div>
+        <div class="cal-months">${cells}</div>
+      </div>`;
+  });
+
+  // Legend for calendar
+  div.innerHTML += `
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px">
+      <div class="leg"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#8a80d8;margin-right:4px"></span><span style="font-size:11px;color:var(--ink2)">種まき・定植</span></div>
+      <div class="leg"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#5599d8;margin-right:4px"></span><span style="font-size:11px;color:var(--ink2)">生育期</span></div>
+      <div class="leg"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#e09a20;margin-right:4px"></span><span style="font-size:11px;color:var(--ink2)">収穫期</span></div>
+      <div class="leg"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#3daf78;margin-right:4px"></span><span style="font-size:11px;color:var(--ink2)">生育〜収穫</span></div>
+      <div class="leg"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#a8c8e0;margin-right:4px"></span><span style="font-size:11px;color:var(--ink2)">冬越し</span></div>
+    </div>`;
 }
 
 renderGrid();
+renderFlow();
+renderCal();
 </script>
 </body>
 </html>
